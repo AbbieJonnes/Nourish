@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import RegisterForm
+from .forms import RegisterForm, FoodItemForm
 from .models import FoodItem
 
 
@@ -45,6 +45,26 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
+
+@login_required
+def add_food(request):
+    if request.method == 'POST':
+        form = FoodItemForm(request.POST)
+
+        if form.is_valid():
+            food = form.save(commit=False)
+            food.user = request.user
+            food.save()
+
+            return redirect('dashboard')
+
+    else:
+        form = FoodItemForm()
+
+    return render(request, 'calorie_tracker/add_food.html', {
+        'form': form
+    })
+
 
 @login_required
 def dashboard(request):
