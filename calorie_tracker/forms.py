@@ -12,7 +12,30 @@ class RegisterForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 
+# class FoodItemForm(forms.ModelForm):
+#      class Meta:
+#         model = FoodItem
+#         fields = ['name', 'calories', 'meal_type']
+
 class FoodItemForm(forms.ModelForm):
-     class Meta:
+
+    class Meta:
         model = FoodItem
         fields = ['name', 'calories', 'meal_type']
+
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-3 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-yellow-500',
+                'placeholder': 'e.g. Grilled chicken'
+            }),
+
+            'calories': forms.NumberInput(attrs={
+                'class': 'w-full px-4 py-3 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-yellow-500',
+                'placeholder': 'e.g. 450'
+            }),
+
+            'meal_type': forms.TextInput(attrs={
+                'class': 'w-full px-4 py-3 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-yellow-500',
+                'placeholder': 'e.g. Lunch'
+            }),
+        }
