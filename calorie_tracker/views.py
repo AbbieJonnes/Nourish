@@ -65,6 +65,18 @@ def add_food(request):
         'form': form
     })
 
+@login_required
+def delete_food(request, food_id):
+    food = get_object_or_404(
+        FoodItem,
+        id=food_id,
+        user=request.user
+    )
+
+    if request.method == 'POST':
+        food.delete()
+
+    return redirect('dashboard')
 
 @login_required
 def dashboard(request):
