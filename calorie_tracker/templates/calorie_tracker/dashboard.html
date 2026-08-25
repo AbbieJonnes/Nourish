@@ -37,6 +37,11 @@
     <button type="submit">Delete</button>
 </form>
 
+<form method="POST" action="{% url 'reset_day' %}">
+    {% csrf_token %}
+    <button type="submit">Reset Day</button>
+</form>
+
             </div>
 
         {% endfor %}
