@@ -1,24 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Food | Nourish</title>
-</head>
+{% extends 'calorie_tracker/base.html' %}
 
-<body>
+{% block title %}Add Food | Nourish{% endblock %}
 
-    <h1>Add Food</h1>
+{% block content %}
 
-    <form method="POST">
-        {% csrf_token %}
+<div class="max-w-2xl mx-auto px-6 py-16">
 
-        {{ form.as_p }}
+    <div class="mb-10">
 
-        <button type="submit">Add Food</button>
-    </form>
+        <p class="text-sm uppercase tracking-[0.25em] text-nourish-gold font-semibold">
+            Nutrition log
+        </p>
 
-    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+        <h1 class="text-4xl md:text-5xl font-serif font-bold mt-3">
+            Add a meal
+        </h1>
 
-</body>
-</html>
+        <p class="text-nourish-muted mt-3">
+            Tell Nourish what you've eaten today.
+        </p>
+
+    </div>
+
+
+    <div class="bg-white rounded-3xl border border-stone-200 p-8 md:p-10 shadow-sm">
+
+        <form method="POST" class="space-y-6">
+
+            {% csrf_token %}
+
+            {% for field in form %}
+
+            <div>
+
+                <label class="block text-sm font-semibold mb-2">
+                    {{ field.label }}
+                </label>
+
+                {{ field }}
+
+                {% if field.errors %}
+                    <p class="text-red-500 text-sm mt-2">
+                        {{ field.errors.0 }}
+                    </p>
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+
+            <button type="submit"
+                    class="w-full bg-nourish-dark text-white py-4 rounded-2xl font-semibold hover:bg-nourish-gold transition">
+                Add to today's log
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
