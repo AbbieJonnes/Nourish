@@ -6,7 +6,7 @@ Nourish is a Django-based calorie tracking web application that helps users keep
 
 Users can create an account, log in securely, add food items with their calorie information, view their daily food entries, delete food entries, calculate their total daily calorie intake, and reset their daily calorie count.
 
-The application provides a clean, responsive, and user-friendly interface built with Tailwind CSS and uses PostgreSQL for persistent data storage.
+The application provides a clean, responsive, and user-friendly interface built with Tailwind CSS and uses PostgreSQL for persistent data storage
 
 ## Features
 
