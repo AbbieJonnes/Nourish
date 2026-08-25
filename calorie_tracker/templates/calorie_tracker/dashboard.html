@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nourish Dashboard</title>
+</head>
+
+<body>
+
+    <h1>Welcome, {{ user.username }} 👋</h1>
+
+    <h2>Today's Calories</h2>
+
+    <h1>{{ total_calories }} kcal</h1>
+
+    <hr>
+
+    <h2>Your Food</h2>
+
+    {% if foods %}
+
+        {% for food in foods %}
+
+            <div>
+                <h3>{{ food.name }}</h3>
+                <p>{{ food.calories }} kcal</p>
+                <p>{{ food.meal_type }}</p>
+                <p>{{ food.date_added }}</p>
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>No food added yet.</p>
+
+    {% endif %}
+
+</body>
+</html>
