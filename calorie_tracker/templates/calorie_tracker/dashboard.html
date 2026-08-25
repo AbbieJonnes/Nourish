@@ -1,60 +1,210 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'calorie_tracker/base.html' %}
 
-    <title>Nourish Dashboard</title>
-</head>
+{% block title %}Dashboard | Nourish{% endblock %}
 
-<body>
+{% block content %}
 
-    <h1>Welcome, {{ user.username }} 👋</h1>
+<div class="max-w-6xl mx-auto px-6 py-12">
 
-    <h2>Today's Calories</h2>
+    <!-- Welcome -->
+    <div class="mb-10">
+        <p class="text-sm uppercase tracking-[0.25em] text-nourish-gold font-semibold">
+            Your daily nutrition
+        </p>
 
-    <h1>{{ total_calories }} kcal</h1>
+        <h1 class="text-4xl md:text-5xl font-serif font-bold mt-3">
+            Welcome back, {{ user.username }}
+        </h1>
 
-    <a href="{% url 'add_food' %}">
-    Add Food
-</a>
+        <p class="text-nourish-muted mt-3">
+            Keep nourishing your body, one meal at a time.
+        </p>
+    </div>
 
-    <hr>
 
-    <h2>Your Food</h2>
+    <!-- Calorie Summary -->
+    <div class="grid md:grid-cols-3 gap-6 mb-10">
 
-    {% if foods %}
+        <!-- Main calorie card -->
+        <div class="md:col-span-2 bg-nourish-dark text-white rounded-3xl p-8 relative overflow-hidden">
 
-        {% for food in foods %}
+            <div class="absolute -right-16 -top-16 w-48 h-48 rounded-full bg-nourish-gold opacity-20"></div>
+
+            <p class="text-sm uppercase tracking-widest text-stone-400">
+                Today's calories
+            </p>
+
+            <div class="flex items-end gap-3 mt-4">
+                <span class="text-6xl font-serif font-bold">
+                    {{ total_calories }}
+                </span>
+
+                <span class="text-stone-400 mb-2">
+                    kcal
+                </span>
+            </div>
+
+            <p class="text-sm text-stone-400 mt-4">
+                Total calories consumed today
+            </p>
+
+        </div>
+
+
+        <!-- Add food card -->
+        <a href="{% url 'add_food' %}"
+           class="bg-white rounded-3xl p-8 border border-stone-200 hover:border-nourish-gold hover:shadow-xl transition group">
+
+            <div class="w-12 h-12 rounded-full bg-nourish-lightgold flex items-center justify-center text-2xl mb-6">
+                +
+            </div>
+
+            <h2 class="text-xl font-semibold">
+                Add food
+            </h2>
+
+            <p class="text-sm text-nourish-muted mt-2">
+                Log your next meal or snack.
+            </p>
+
+            <span class="inline-block mt-6 text-sm font-semibold text-nourish-gold group-hover:translate-x-1 transition">
+                Add entry →
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <!-- Food Log -->
+    <div class="bg-white rounded-3xl border border-stone-200 overflow-hidden">
+
+        <div class="p-6 md:p-8 border-b border-stone-100 flex items-center justify-between">
 
             <div>
-                <h3>{{ food.name }}</h3>
-                <p>{{ food.calories }} kcal</p>
-                <p>{{ food.meal_type }}</p>
-                <p>{{ food.date_added }}</p>
-                <form method="POST" action="{% url 'delete_food' food.id %}">
-    {% csrf_token %}
-    <button type="submit">Delete</button>
-</form>
+                <h2 class="text-2xl font-serif font-bold">
+                    Today's food
+                </h2>
 
-<form method="POST" action="{% url 'reset_day' %}">
-    {% csrf_token %}
-    <button type="submit">Reset Day</button>
-</form>
+                <p class="text-sm text-nourish-muted mt-1">
+                    Everything you've logged today.
+                </p>
+            </div>
+
+            <span class="bg-nourish-lightgold text-nourish-dark px-4 py-2 rounded-full text-sm font-semibold">
+                {{ foods|length }} entries
+            </span>
+
+        </div>
+
+
+        {% if foods %}
+
+            <div class="divide-y divide-stone-100">
+
+                {% for food in foods %}
+
+                <div class="p-6 flex items-center justify-between hover:bg-nourish-cream transition">
+
+                    <div class="flex items-center gap-4">
+
+                        <div class="w-12 h-12 rounded-2xl bg-nourish-lightgold flex items-center justify-center text-xl">
+                            {% if food.meal_type == "Breakfast" %}
+                                
+                            {% elif food.meal_type == "Lunch" %}
+                                
+                            {% elif food.meal_type == "Dinner" %}
+                                
+                            {% else %}
+                               
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <h3 class="font-semibold">
+                                {{ food.name }}
+                            </h3>
+
+                            <p class="text-sm text-nourish-muted">
+                                {{ food.meal_type }}
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="flex items-center gap-6">
+
+                        <span class="font-semibold">
+                            {{ food.calories }} kcal
+                        </span>
+
+                        <form method="POST"
+                              action="{% url 'delete_food' food.id %}">
+                            {% csrf_token %}
+
+                            <button type="submit"
+                                    class="text-stone-400 hover:text-red-500 transition"
+                                    title="Delete food">
+                                
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
 
             </div>
 
-        {% endfor %}
+        {% else %}
 
-    {% else %}
+            <div class="p-16 text-center">
 
-        <p>No food added yet.</p>
+                <div class="text-5xl mb-5">
+                    
+                </div>
 
+                <h3 class="text-xl font-serif font-bold">
+                    Nothing logged yet
+                </h3>
+
+                <p class="text-nourish-muted mt-2">
+                    Start your day by adding your first meal.
+                </p>
+
+                <a href="{% url 'add_food' %}"
+                   class="inline-block mt-6 bg-nourish-dark text-white px-6 py-3 rounded-full hover:bg-nourish-gold transition">
+                    Add your first food
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- Reset -->
+    {% if foods %}
+    <div class="mt-6 flex justify-end">
+
+        <form method="POST" action="{% url 'reset_day' %}">
+            {% csrf_token %}
+
+            <button type="submit"
+                    onclick="return confirm('Are you sure you want to reset today’s calorie count?')"
+                    class="text-sm text-stone-400 hover:text-red-500 transition">
+                Reset today's calories
+            </button>
+
+        </form>
+
+    </div>
     {% endif %}
 
-    <a href="{% url 'logout' %}">
-    Logout
-</a>
+</div>
 
-</body>
-</html>
+{% endblock %}
