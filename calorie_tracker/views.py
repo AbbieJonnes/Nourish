@@ -90,3 +90,10 @@ def dashboard(request):
         'foods': foods,
         'total_calories': total_calories,
     })
+
+@login_required
+def reset_day(request):
+    if request.method == 'POST':
+        FoodItem.objects.filter(user=request.user).delete()
+
+    return redirect('dashboard')
