@@ -1,37 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Nourish</title>
-</head>
+{% extends 'calorie_tracker/base.html' %}
 
-<body>
+{% block title %}Login | Nourish{% endblock %}
 
-    <h1>Welcome Back</h1>
+{% block content %}
 
-    <p>Log in to continue tracking your nutrition.</p>
+<div class="min-h-[80vh] flex items-center justify-center px-6 py-12">
 
-    {% if error %}
-        <p>{{ error }}</p>
-    {% endif %}
+    <div class="w-full max-w-md">
 
-    <form method="POST">
-        {% csrf_token %}
+        <div class="text-center mb-8">
 
-        <label>Username</label>
-        <input type="text" name="username" required>
+            <p class="text-sm uppercase tracking-[0.25em] text-nourish-gold font-semibold">
+                Welcome back
+            </p>
 
-        <label>Password</label>
-        <input type="password" name="password" required>
+            <h1 class="text-4xl font-serif font-bold mt-3">
+                Log in to Nourish
+            </h1>
 
-        <button type="submit">Log In</button>
-    </form>
+            <p class="text-nourish-muted mt-3">
+                Continue your nutrition journey.
+            </p>
 
-    <p>
-        Don't have an account?
-        <a href="{% url 'register' %}">Create one</a>
-    </p>
+        </div>
 
-</body>
-</html>
+
+        <div class="bg-white rounded-3xl border border-stone-200 p-8 shadow-sm">
+
+            {% if error %}
+                <div class="bg-red-50 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            <form method="POST" class="space-y-5">
+
+                {% csrf_token %}
+
+                <div>
+                    <label class="block text-sm font-semibold mb-2">
+                        Username
+                    </label>
+
+                    <input type="text"
+                           name="username"
+                           required
+                           class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                </div>
+
+
+                <div>
+                    <label class="block text-sm font-semibold mb-2">
+                        Password
+                    </label>
+
+                    <input type="password"
+                           name="password"
+                           required
+                           class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                </div>
+
+
+                <button type="submit"
+                        class="w-full bg-nourish-dark text-white py-4 rounded-xl font-semibold hover:bg-nourish-gold transition">
+                    Log in
+                </button>
+
+            </form>
+
+
+            <p class="text-center text-sm text-nourish-muted mt-6">
+                Don't have an account?
+
+                <a href="{% url 'register' %}"
+                   class="text-nourish-gold font-semibold hover:underline">
+                    Create one
+                </a>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
