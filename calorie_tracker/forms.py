@@ -12,7 +12,7 @@ class RegisterForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 
-    class FoodItemForm(forms.ModelForm):
+class FoodItemForm(forms.ModelForm):
      class Meta:
         model = FoodItem
         fields = ['name', 'calories', 'meal_type']
