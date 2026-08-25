@@ -1,29 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join Nourish</title>
-</head>
+{% extends 'calorie_tracker/base.html' %}
 
-<body>
+{% block title %}Create Account | Nourish{% endblock %}
 
-    <h1>Create your Nourish account</h1>
+{% block content %}
 
-    <p>Start tracking your daily nutrition.</p>
+<div class="min-h-[80vh] flex items-center justify-center px-6 py-12">
 
-    <form method="POST">
-        {% csrf_token %}
+    <div class="w-full max-w-md">
 
-        {{ form.as_p }}
+        <div class="text-center mb-8">
 
-        <button type="submit">Create Account</button>
-    </form>
+            <p class="text-sm uppercase tracking-[0.25em] text-nourish-gold font-semibold">
+                Begin your journey
+            </p>
 
-    <p>
-        Already have an account?
-        <a href="#">Log in</a>
-    </p>
+            <h1 class="text-4xl font-serif font-bold mt-3">
+                Create your account
+            </h1>
 
-</body>
-</html>
+            <p class="text-nourish-muted mt-3">
+                A healthier relationship with what you eat starts here.
+            </p>
+
+        </div>
+
+
+        <div class="bg-white rounded-3xl border border-stone-200 p-8 shadow-sm">
+
+            <form method="POST" class="space-y-5">
+
+                {% csrf_token %}
+
+                {% for field in form %}
+
+                <div>
+
+                    <label class="block text-sm font-semibold mb-2">
+                        {{ field.label }}
+                    </label>
+
+                    {{ field }}
+
+                    {% if field.errors %}
+                        <div class="text-red-500 text-sm mt-2">
+                            {{ field.errors.0 }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+                {% endfor %}
+
+
+                <button type="submit"
+                        class="w-full bg-nourish-dark text-white py-4 rounded-xl font-semibold hover:bg-nourish-gold transition">
+                    Create my account
+                </button>
+
+            </form>
+
+
+            <p class="text-center text-sm text-nourish-muted mt-6">
+                Already have an account?
+
+                <a href="{% url 'login' %}"
+                   class="text-nourish-gold font-semibold hover:underline">
+                    Log in
+                </a>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
