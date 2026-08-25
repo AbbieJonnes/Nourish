@@ -32,6 +32,11 @@
                 <p>{{ food.calories }} kcal</p>
                 <p>{{ food.meal_type }}</p>
                 <p>{{ food.date_added }}</p>
+                <form method="POST" action="{% url 'delete_food' food.id %}">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+</form>
+
             </div>
 
         {% endfor %}
